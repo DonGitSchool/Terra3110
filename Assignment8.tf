@@ -8,9 +8,9 @@ terraform {
 }
 
 provider "aws" {
-  access_key= TF_VAR_AWS_ACCESS_KEY_ID
-  secret_key= TF_VAR_AWS_SECRET_ACCESS_KEY
-  token= TF_VAR_SESSION_TOKEN
+  access_key= AWS_ACCESS_KEY_ID
+  secret_key= AWS_SECRET_ACCESS_KEY
+  token= VAR_SESSION_TOKEN
   region = "us-east-1"
 }
 
