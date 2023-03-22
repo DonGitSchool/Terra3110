@@ -75,6 +75,20 @@ resource "aws_route_table_association" "tf-association" {
   route_table_id = aws_route_table.tf-r.id
 }
 
+resource "aws_ebs_volume" "dev-vol" {
+  availibility_zone = "us-east-1"
+    size: 1
+    tags= {
+          Name= "1gig"
+    }
+}
+
+resource "aws_volume_attachment" "dev-vol" {
+  device_name = "/dev/sdc"
+  volume_id = "${aws_ebs_volume.dev-vol.id}"
+  instance_id = "${aws_instance.dev.id}"
+}
+
 #Resources
 resource "aws_instance" "dev" {
   ami           = "ami-0557a15b87f6559cf"
@@ -92,6 +106,19 @@ resource "aws_instance" "dev" {
    chmod +x /tmp/install.sh
    source /tmp/install.sh
    EOF
+}
+
+resource "aws_ebs_volume" "test-vol" {
+  availibility_zone = "us-east-1"
+    size: 1
+    tags= {
+          Name= "1gig2"
+    }
+}
+resource "aws_volume_attachment" "test-vol" {
+  device_name = "/dev/sdc"
+  volume_id = "${aws_ebs_volume.test-vol.id}"
+  instance_id = "${aws_instance.test.id}"
 }
 
 #Resources
@@ -113,7 +140,19 @@ resource "aws_instance" "test" {
    EOF
 }
 
-#Resources
+resource "aws_ebs_volume" "prod-vol" {
+  availibility_zone = "us-east-1"
+    size: 1
+    tags= {
+          Name= "1gig3"
+    }
+}
+resource "aws_volume_attachment" "prod-vol" {
+  device_name = "/dev/sdc"
+  volume_id = "${aws_ebs_volume.prod-vol.id}"
+  instance_id = "${aws_instance.prod.id}"
+}
+
 resource "aws_instance" "prod" {
   ami           = "ami-0557a15b87f6559cf"
   instance_type = "t2.micro"
