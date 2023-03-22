@@ -76,7 +76,7 @@ resource "aws_route_table_association" "tf-association" {
 }
 
 resource "aws_ebs_volume" "dev-vol" {
-  availibility_zone = "us-east-1"
+  availability_zone = "us-east-1"
     size = 1
     tags= {
           Name= "1gig"
@@ -109,7 +109,7 @@ resource "aws_instance" "dev" {
 }
 
 resource "aws_ebs_volume" "test-vol" {
-  availibility_zone = "us-east-1"
+  availability_zone = "us-east-1"
     size = 1
     tags= {
           Name= "1gig2"
@@ -141,7 +141,7 @@ resource "aws_instance" "test" {
 }
 
 resource "aws_ebs_volume" "prod-vol" {
-  availibility_zone = "us-east-1"
+  availability_zone = "us-east-1"
     size = 1
     tags= {
           Name= "1gig3"
