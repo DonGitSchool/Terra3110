@@ -116,7 +116,7 @@ resource "aws_ebs_volume" "test-vol" {
     }
 }
 resource "aws_volume_attachment" "test-vol" {
-  device_name = "/dev/sdt"
+  device_name = "/dev/sdd"
   volume_id = "${aws_ebs_volume.test-vol.id}"
   instance_id = "${aws_instance.test.id}"
 }
@@ -148,7 +148,7 @@ resource "aws_ebs_volume" "prod-vol" {
     }
 }
 resource "aws_volume_attachment" "prod-vol" {
-  device_name = "/dev/sdp"
+  device_name = "/dev/sdd"
   volume_id = "${aws_ebs_volume.prod-vol.id}"
   instance_id = "${aws_instance.prod.id}"
 }
