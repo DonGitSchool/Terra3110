@@ -12,7 +12,7 @@ provider "aws" {
 }
 
 # Create a new key pair
-resource "aws_key_pair" "key2" {
+resource "aws_key_pair" "key3" {
   key_name = "key2"
   public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDU2YZ6ZPA9TLz+I1h36bHssAQYBqeqUpUE7iy+WXGxp6cYpk7SKRu822PbpFwmiGlFGz2iQ2QqRxA5Halu5CrIFFYSRkTqtMRTKQp1KAxey5LWUF+/YWDjMlMS0ZDbsE4mSbTcNHIZ1qI2257vywk2uI/gLPF30IM7bGA816zzHCjtM32jPaGeDnv8REKi+6LdU8Ps95af+o7sgUZn2DEe+sovMyubhpXQT/z5JGBvPDZUd+WLjcbdIYOPlc2Zfg7nnn4YIbuleGSYjlWN/xx6nfQtU9XeGHtqYjAMb8l0a7+OQ+sDntI8yDyxOsL8FU6CAp+7d1BDBL9iJYGkyYAV d00417722@ssh"
 }
