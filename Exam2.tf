@@ -46,6 +46,12 @@ resource "aws_security_group" "tf-sg" {
     protocol  = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  ingress {
+    from_port = 3306
+    to_port   = 3306
+    protocol  = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
   egress {
     from_port = 0
     to_port   = 0
@@ -75,26 +81,31 @@ resource "aws_route_table_association" "tf-association" {
   route_table_id = aws_route_table.tf-r.id
 }
 
-resource "aws_ebs_volume" "dev-vol" {
-  availability_zone = "us-east-1a"
-    size = 1
-    tags= {
-          Name= "1gig"
-    }
-}
-
-resource "aws_volume_attachment" "dev-vol" {
-  device_name = "/dev/sdd"
-  volume_id = "${aws_ebs_volume.dev-vol.id}"
-  instance_id = "${aws_instance.dev.id}"
+#Resources
+resource "aws_instance" "mysqlexam" {
+  ami           = "ami-0557a15b87f6559cf"
+  instance_type = "t2.micro"
+  tags = {
+        Name = "mysqlexam"
+  }
+  vpc_security_group_ids = [aws_security_group.tf-sg.id]
+  associate_public_ip_address = "true"
+  key_name = "key2"
+  subnet_id = aws_subnet.tf-subnet.id
+  user_data = <<-EOF
+   #!/bin/bash
+   wget http://computing.utahtech.edu/it/3110/notes/2021/terraform/install.sh -O /tmp/install.sh
+   chmod +x /tmp/install.sh
+   source /tmp/install.sh
+   EOF
 }
 
 #Resources
-resource "aws_instance" "dev" {
+resource "aws_instance" "apacheexam" {
   ami           = "ami-0557a15b87f6559cf"
   instance_type = "t2.micro"
   tags = {
-        Name = "dev"
+        Name = "apacheexam"
   }
   vpc_security_group_ids = [aws_security_group.tf-sg.id]
   associate_public_ip_address = "true"
@@ -108,25 +119,7 @@ resource "aws_instance" "dev" {
    EOF
 }
 
-resource "aws_ebs_volume" "test-vol" {
-  availability_zone = "us-east-1a"
-    size = 1
-    tags= {
-          Name= "1gig2"
-    }
-}
-resource "aws_volume_attachment" "test-vol" {
-  device_name = "/dev/sdd"
-  volume_id = "${aws_ebs_volume.test-vol.id}"
-  instance_id = "${aws_instance.test.id}"
-}
 
-#Resources
-resource "aws_instance" "test" {
-  ami           = "ami-0557a15b87f6559cf"
-  instance_type = "t2.micro"
-  tags = {
-        Name = "test"
   }
   vpc_security_group_ids = [aws_security_group.tf-sg.id]
   associate_public_ip_address = "true"
@@ -140,43 +133,9 @@ resource "aws_instance" "test" {
    EOF
 }
 
-resource "aws_ebs_volume" "prod-vol" {
-  availability_zone = "us-east-1a"
-    size = 1
-    tags= {
-          Name= "1gig3"
-    }
+output "mysqlexam_ip_addr" {
+        value = aws_instance.mysqlexam.public_ip
 }
-resource "aws_volume_attachment" "prod-vol" {
-  device_name = "/dev/sdd"
-  volume_id = "${aws_ebs_volume.prod-vol.id}"
-  instance_id = "${aws_instance.prod.id}"
-}
+output "mysqlexam_ip_addr" {
+        value = aws_instance.apacheexam.public_ip
 
-resource "aws_instance" "prod" {
-  ami           = "ami-0557a15b87f6559cf"
-  instance_type = "t2.micro"
-  tags = {
-        Name = "Prod"
-  }
-  vpc_security_group_ids = [aws_security_group.tf-sg.id]
-  associate_public_ip_address = "true"
-  key_name = "key2"
-  subnet_id = aws_subnet.tf-subnet.id
-  user_data = <<-EOF
-   #!/bin/bash
-   wget http://computing.utahtech.edu/it/3110/notes/2021/terraform/install.sh -O /tmp/install.sh
-   chmod +x /tmp/install.sh
-   source /tmp/install.sh
-   EOF
-}
-
-output "dev_ip_addr" {
-        value = aws_instance.dev.public_ip
-}
-output "test_ip_addr" {
-        value = aws_instance.test.public_ip
-}
-output "prod_ip_addr" {
-        value = aws_instance.prod.public_ip
-}
