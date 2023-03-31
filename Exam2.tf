@@ -113,14 +113,6 @@ resource "aws_instance" "apacheexam" {
   subnet_id = aws_subnet.tf-subnet.id
 }
 
-
-  }
-  vpc_security_group_ids = [aws_security_group.tf-sg.id]
-  associate_public_ip_address = "true"
-  key_name = "key2"
-  subnet_id = aws_subnet.tf-subnet.id
-}
-
 output "mysqlexam_ip_addr" {
         value = aws_instance.mysqlexam.public_ip
 }
