@@ -118,4 +118,4 @@ output "mysqlexam_ip_addr" {
 }
 output "mysqlexam_ip_addr" {
         value = aws_instance.apacheexam.public_ip
-
+}
