@@ -111,12 +111,6 @@ resource "aws_instance" "apacheexam" {
   associate_public_ip_address = "true"
   key_name = "key2"
   subnet_id = aws_subnet.tf-subnet.id
-  user_data = <<-EOF
-   #!/bin/bash
-   wget http://computing.utahtech.edu/it/3110/notes/2021/terraform/install.sh -O /tmp/install.sh
-   chmod +x /tmp/install.sh
-   source /tmp/install.sh
-   EOF
 }
 
 
@@ -125,12 +119,6 @@ resource "aws_instance" "apacheexam" {
   associate_public_ip_address = "true"
   key_name = "key2"
   subnet_id = aws_subnet.tf-subnet.id
-  user_data = <<-EOF
-   #!/bin/bash
-   wget http://computing.utahtech.edu/it/3110/notes/2021/terraform/install.sh -O /tmp/install.sh
-   chmod +x /tmp/install.sh
-   source /tmp/install.sh
-   EOF
 }
 
 output "mysqlexam_ip_addr" {
