@@ -116,6 +116,6 @@ resource "aws_instance" "apacheexam" {
 output "mysqlexam_ip_addr" {
         value = aws_instance.mysqlexam.public_ip
 }
-output "mysqlexam_ip_addr" {
+output "apacheexam_ip_addr" {
         value = aws_instance.apacheexam.public_ip
 }
